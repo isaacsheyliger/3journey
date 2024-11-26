@@ -11,10 +11,56 @@ const canvas = document.querySelector('canvas.webgl');
 const scene = new THREE.Scene();
 
 /**
+ * Textures
+ */
+const image = new Image();
+const loadingManager = new THREE.LoadingManager();
+loadingManager.onStart = () => {
+    console.log('loading started');
+}
+loadingManager.onLoad = () => {
+    console.log('loading finished');
+}
+loadingManager.onProgress = () => {
+    console.log('loading progressing');
+}
+loadingManager.onError = () => {
+    console.log('loading error');
+}
+
+const textureLoader = new THREE.TextureLoader(loadingManager);
+const colorTexture = textureLoader.load('/textures/door/color.jpg');
+colorTexture.colorSpace = THREE.SRGBColorSpace;
+colorTexture.repeat.x = 2;
+colorTexture.repeat.y = 3;
+colorTexture.wrapS = THREE.RepeatWrapping;
+colorTexture.wrapT = THREE.RepeatWrapping;
+colorTexture.offset.x = 0.5;
+colorTexture.offset.y = 0.5;
+colorTexture.rotation = Math.PI * 0.25;
+
+const alphaTexture = textureLoader.load('/textures/door/alpha.jpg');
+const heightTexture = textureLoader.load('/textures/door/height.jpg');
+const normalTexture = textureLoader.load('/textures/door/normal.jpg');
+const ambientOcclusionTexture = textureLoader.load('/textures/door/ambientOcclusion.jpg');
+const metalnessTexture = textureLoader.load('/textures/door/metalness.jpg');
+const roughnessTexture = textureLoader.load('/textures/door/roughness.jpg');
+
+// Native JS texture load technique
+//
+// const texture = new THREE.Texture(image);
+// texture.colorSpace = THREE.SRGBColorSpace;
+// image.onload = () => {
+//     texture.needsUpdate = true;
+//     console.log('image loaded');
+// }
+// image.src = '/textures/door/color.jpg';
+
+/**
  * Object
  */
 const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const material = new THREE.MeshBasicMaterial({ map: colorTexture });
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
