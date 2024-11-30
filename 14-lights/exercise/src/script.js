@@ -9,6 +9,7 @@ import GUI from 'lil-gui';
 // Debug
 const gui = new GUI();
 gui.close();
+gui._closeFolders = true
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl');
@@ -39,14 +40,14 @@ const dirLightTweaks = gui.addFolder('Directional Light');
 
 dirLightTweaks
     .addColor(directionalLight, 'color')
-    .name('Directional Light Color');
+    .name('Color');
 
 dirLightTweaks
     .add(directionalLight, 'intensity')
     .min(0)
     .max(3)
     .step(0.01)
-    .name('Directional Light Intensity');
+    .name('Intensity');
 
 // Hemisphere light
 const hemisphereLight = new THREE.HemisphereLight(0x0000ff, 0xff0000, 0.9);
@@ -56,18 +57,18 @@ const hemiLightTweaks = gui.addFolder('Hemisphere Light');
 
 hemiLightTweaks
     .addColor(hemisphereLight, 'color')
-    .name('Hemisphere Light 1');
+    .name('Color 1');
 
 hemiLightTweaks
     .addColor(hemisphereLight, 'groundColor')
-    .name('Hemisphere Light 2');
+    .name('Color 2');
 
 hemiLightTweaks
     .add(hemisphereLight, 'intensity')
     .min(0)
     .max(3)
     .step(0.01)
-    .name('Hemisphere Light Intensity');
+    .name('Intensity');
 
 // Point light
 const pointLight = new THREE.PointLight(0xff9000, 1.5);
@@ -78,14 +79,14 @@ const pointLightTweaks = gui.addFolder('Point Light');
 
 pointLightTweaks
     .addColor(pointLight, 'color')
-    .name('Point Light Color');
+    .name('Color');
 
 pointLightTweaks
     .add(pointLight, 'intensity')
     .min(0)
     .max(3)
     .step(0.01)
-    .name('Point Light Intensity');
+    .name('Intensity');
 
 pointLightTweaks
     .add(pointLight, 'distance')
@@ -100,6 +101,27 @@ pointLightTweaks
     .max(10)
     .step(0.01)
     .name('Decay');
+
+pointLightTweaks
+    .add(pointLight.position, 'x')
+    .min(-3)
+    .max(3)
+    .step(0.01)
+    .name('X');
+
+pointLightTweaks
+    .add(pointLight.position, 'y')
+    .min(-0.5)
+    .max(0.5)
+    .step(0.01)
+    .name('Y');
+
+pointLightTweaks
+    .add(pointLight.position, 'z')
+    .min(-3)
+    .max(3)
+    .step(0.01)
+    .name('Z');
 
 // RectArea light
 const rectAreaLight = new THREE.RectAreaLight(0xd300ff, 6, 1, 1);
@@ -149,6 +171,13 @@ spotLightTweaks
     .name('Spotlight Color');
 
 spotLightTweaks
+    .add(spotLight, 'intensity')
+    .min(0)
+    .max(10)
+    .step(0.01)
+    .name('Intensity');
+
+spotLightTweaks
     .add(spotLight.target.position, 'x')
     .min(-2)
     .max(2)
@@ -161,6 +190,27 @@ spotLightTweaks
     .max(2)
     .step(0.01)
     .name('Y');
+
+spotLightTweaks
+    .add(spotLight, 'angle')
+    .min(0)
+    .max(Math.PI / 2)
+    .step(Math.PI / 60)
+    .name('Angle');
+
+spotLightTweaks
+    .add(spotLight, 'penumbra')
+    .min(0)
+    .max(1)
+    .step(0.01)
+    .name('Penumbra');
+
+spotLightTweaks
+    .add(spotLight, 'decay')
+    .min(0)
+    .max(5)
+    .step(0.01)
+    .name('Decay');
 
 // Helpers
 const hemisphereLightHelper = new THREE.HemisphereLightHelper(hemisphereLight, 0.2);
