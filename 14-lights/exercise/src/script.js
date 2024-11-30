@@ -21,15 +21,17 @@ const scene = new THREE.Scene();
  * Lights
  */
 // Ambient light
-const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-// scene.add(ambientLight);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0);
+scene.add(ambientLight);
 
-// gui
-//     .add(ambientLight, 'intensity')
-//     .min(0)
-//     .max(3)
-//     .step(0.01)
-//     .name('Ambient Light Intensity');
+const ambientLightTweaks = gui.addFolder('Ambient Light');
+
+ambientLightTweaks
+    .add(ambientLight, 'intensity')
+    .min(0)
+    .max(3)
+    .step(0.01)
+    .name('Intensity');
 
 // Directional light
 const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.9);
@@ -302,9 +304,9 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-camera.position.x = 1;
-camera.position.y = 1;
-camera.position.z = 2;
+camera.position.x = 2;
+camera.position.y = 2;
+camera.position.z = 5;
 scene.add(camera);
 
 // Controls
