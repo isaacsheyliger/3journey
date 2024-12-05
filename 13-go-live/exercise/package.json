@@ -8,6 +8,7 @@
     "build": "vite build"
   },
   "devDependencies": {
+    "tailwindcss": "^3.4.16",
     "vite": "^5.3.3",
     "vite-plugin-restart": "^0.4.1"
   },
