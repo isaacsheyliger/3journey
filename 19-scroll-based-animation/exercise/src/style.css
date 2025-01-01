@@ -4,11 +4,16 @@
     padding: 0;
 }
 
-html,
+html
+{
+    background: #151515;
+}
+
+/* html,
 body
 {
     overflow: hidden;
-}
+} */
 
 .webgl
 {
