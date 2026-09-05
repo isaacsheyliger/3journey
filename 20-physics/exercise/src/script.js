@@ -62,7 +62,7 @@ const playHitSound = (collision, volume) => {
         hitSound.volume = Math.min(1, (impactStrength / 2 * volume));
         hitSound.currentTime = 0;   
         hitSound.play();
-    }   
+    }
 }
 
 /**
