@@ -20,6 +20,7 @@ const scene = new THREE.Scene();
  * Textures
  */
 const textureLoader = new THREE.TextureLoader();
+const flagTexture = textureLoader.load('/textures/guyana-flag-sq.jpg');
 
 /**
  * Test mesh
@@ -27,14 +28,34 @@ const textureLoader = new THREE.TextureLoader();
 // Geometry
 const geometry = new THREE.PlaneGeometry(1, 1, 32, 32);
 
+const count = geometry.attributes.position.count;
+const randoms = new Float32Array(count);
+
+for (let i = 0; i < count; i++) {
+    randoms[i] = Math.random();
+}
+
+geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
+
 // Material
-const material = new THREE.RawShaderMaterial({
+const material = new THREE.ShaderMaterial({
     vertexShader: testVertexShader,
     fragmentShader: testFragmentShader,
+    transparent: true,
+    uniforms: {
+        uFrequency: { value: new THREE.Vector2(10.0, 2.0) },
+        uTime: { value: 0.0 },
+        uColor: { value: new THREE.Color(0xa500ff)},
+        uTexture: { value: flagTexture }
+    }
 });
+
+gui.add(material.uniforms.uFrequency.value, 'x', 0, 20, 0.01).name('Frequency X');
+gui.add(material.uniforms.uFrequency.value, 'y', 0, 20, 0.01).name('Frequency Y');
 
 // Mesh
 const mesh = new THREE.Mesh(geometry, material);
+mesh.scale.y = 1 / 1.618;
 scene.add(mesh);
 
 /**
@@ -89,6 +110,9 @@ const clock = new THREE.Clock();
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime();
+
+    // Update materials
+    material.uniforms.uTime.value = elapsedTime;
 
     // Update controls
     controls.update();
